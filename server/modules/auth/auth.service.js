@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../users/user.model.js";
+import apiError from "../../utils/apiError.js";
 
 export const loginUser = async (loginData) => {
     loginData.username = loginData.username.trim().toLowerCase();
@@ -9,7 +10,10 @@ export const loginUser = async (loginData) => {
     }).select("+password");
 
     if (!user) {
-        throw new Error("Invalid username or password");
+        throw new ApiError(
+            401,
+            "Invalid username or password"
+        );
     }
 
     const isPasswordValid = await bcrypt.compare(
@@ -18,7 +22,10 @@ export const loginUser = async (loginData) => {
     );
 
     if (!isPasswordValid) {
-        throw new Error("Invalid username or password");
+        throw new ApiError(
+            401,
+            "Invalid username or password"
+        );
     }
 
     const token = jwt.sign(

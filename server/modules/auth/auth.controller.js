@@ -9,9 +9,6 @@ export const loginController = async (req,res) => {
             data: result,
         });
     } catch (error) {
-        return res.status(401).json({
-            success: false,
-            message: error.message,
-        });
+        next(error);
     }
 }

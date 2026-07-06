@@ -13,7 +13,10 @@ export const createUser = async (userData) => {
     });
 
     if (existingUser) {
-        throw new Error("Username already exists");
+        throw new ApiError(
+            400,
+            "Username already exists"
+        );
     }
 
     userData.password = await bcrypt.hash(
@@ -25,8 +28,9 @@ export const createUser = async (userData) => {
 };
 
 export const getUsers = async () => {
-    return await User.find();
-}
+    const users = await User.find();
+    return users;
+};
 
 export const getUserById = async (id) => {
     return await User.findById(id);

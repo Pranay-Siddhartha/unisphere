@@ -15,9 +15,18 @@ export const createUserController = async (req,res) => {
             data: user,
         })
     } catch (error) {
-        return res.status(400).json({
-            success : false,
-            message : error.message,
+        next(error);
+    }
+};
+
+export const getAllUsersController = async (req,res,next) => {
+    try {
+        const users = await getUsers();
+        res.status(200).json({
+            success: true,
+            data:true,
         });
+    } catch (error) {
+        next(error);
     }
 };
