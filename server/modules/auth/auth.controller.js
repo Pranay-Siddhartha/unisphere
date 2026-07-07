@@ -1,6 +1,6 @@
 import { loginUser } from "./auth.service.js";
 
-export const loginController = async (req,res) => {
+export const loginController = async (req,res,next) => {
     try {
         const result = await loginUser(req.body);
         return res.status(200).json({

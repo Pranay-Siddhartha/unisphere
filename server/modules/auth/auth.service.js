@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../users/user.model.js";
-import apiError from "../../utils/apiError.js";
+import ApiError from "../../utils/apiError.js";
 
 export const loginUser = async (loginData) => {
     loginData.username = loginData.username.trim().toLowerCase();

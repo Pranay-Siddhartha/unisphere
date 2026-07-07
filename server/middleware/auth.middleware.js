@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import ApiError from "../../utils/apiError.js";
+import ApiError from "../utils/apiError.js";
 
-export const verifyToken = (req,res,next) => {
+export const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
-    if(!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return next(
             new ApiError(
                 401,
@@ -14,8 +14,8 @@ export const verifyToken = (req,res,next) => {
     }
 
     const token = authHeader.split(" ")[1];
-    
-    try{
+
+    try {
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET
@@ -30,12 +30,12 @@ export const verifyToken = (req,res,next) => {
             )
         );
     }
-    
+
 }
 
 export const authorizeRoles = (...roles) => {
-    return (req,res,next) => {
-        if(!roles.includes(req.user.role)) {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
             return next(
                 new ApiError(
                     403,
